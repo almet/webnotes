@@ -1,7 +1,7 @@
-if (document.storage == undefined)
-  document.storage = {sync: {}};
+if (window.storage == undefined)
+  window.storage = {sync: {}};
 
-document.storage.sync.config = {
+window.storage.sync.config = {
   url: "https://kinto.dev.mozaws.net/v1/",
   type: "kinto"
 };
