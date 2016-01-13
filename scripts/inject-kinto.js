@@ -4,7 +4,9 @@ if (window.storage == undefined)
 if (window.storage.sync == undefined)
   window.storage.sync = {};
 
+const storageUrl = document.body.getAttribute("kinto-storage-url");
+
 window.storage.sync.config = {
-  url: document.body.getAttribute("kinto-storage-url"),
+  url: storageUrl,
   type: "kinto"
 };
