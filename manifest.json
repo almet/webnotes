@@ -1,0 +1,17 @@
+{
+  "applications":  {
+    "gecko": {
+      "id": "webextension@kinto-storage.com"
+    }
+  },
+  "manifest_version": 2,
+  "name": "Kinto Storage configurator",
+  "version": "0.1",
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["injectscript.js"]
+    }
+  ],
+  "web_accessible_resources": ["script.js"]
+}
