@@ -1,6 +1,1 @@
-# Configure your default Kinto server
-
-With this extension, configure your default kinto server directly from your
-browser.
-
-![Demonstration](http://alexis.notmyidea.org/kinto-webextension.gif)
+Save the current selection to a kinto instance, to publish it to anyone you want.
