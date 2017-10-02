@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+
+    <form>
+        <dl>
+            <dt><label>Kinto server URL</label></dt>
+            <dd><input type="text" id="kinto_url"></dd>
+            <dt><label>Bucket name</label></dt>
+            <dd><input type="text" id="kinto_bucket" ></dd>
+            <dt><label>Collection name</label></dt>
+            <dd><input type="text" id="kinto_collection" ></dd>
+            <dt><label>Secret key</label></dt>
+            <dd><input type="text" id="kinto_secret" ></dd>
+        </dl>
+        <button type="submit">Save</button>
+        <a id="initializeStorage" href="">initialize storage</a>
+    </form>
+
+    <script src="options.js"></script>
+
+  </body>
+
+</html>

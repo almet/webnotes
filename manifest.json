@@ -18,10 +18,13 @@
       },
 
     "commands": {
-      "toggle-feature": {
+      "capture-clipboard": {
         "suggested_key": {"default": "Ctrl+Shift+U" },
-        "description": "Send a 'toggle-feature' event to the extension"
+        "description": "Capture the selected text to the Kinto instance you specified"
       }
   },
-  "permissions": ["notifications", "https://kinto.notmyidea.org/*"]
+  "permissions": ["storage", "notifications", "https://kinto.notmyidea.org/*"],
+  "options_ui": {
+    "page": "options.html"
+  }
 }

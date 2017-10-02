@@ -22,17 +22,15 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
-var server = "https://kinto.notmyidea.org/v1";
-var authorization =  "Basic " + btoa("alexis:notsecret");
-var bucket = "alexis";
-var collection = "notes";
-var url = `${server}/buckets/${bucket}/collections/${collection}/records`;
 
-// Reusable HTTP headers.
+var kinto_url = "https://kinto.notmyidea.org/v1";
+var kinto_bucket = "notesapp"
+var kinto_collection = "notes"
+var records_url = `${kinto_url}/buckets/${kinto_bucket}/collections/${kinto_collection}/records`;
+
 var headers = {
     "Accept":        "application/json",
     "Content-Type":  "application/json",
-    "Authorization": authorization
 };
 
 function renderNote(note) {
@@ -45,7 +43,7 @@ function renderNote(note) {
     return div;
 }
 
-fetch(url, {headers: headers})
+fetch(records_url, {headers: headers})
     .then(function (response) {
         if (response.ok) {
             response.json().then((json) => {
