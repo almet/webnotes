@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Saved notes</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap-theme.min.css">
+    <script src="jquery-2.1.0.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <h1><a href="#">My saved notes - from other places on the web.</a></h1>
+  <template id="note-tpl">
+      <blockquote>
+          <p class="text"></p>
+          <footer>Enregistré le <span class="date"></span> sur <a class="link" href=""></a></footer>
+      </blockquote>
+  </template>
+  <div id="notes"></div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+var server = "https://kinto.notmyidea.org/v1";
+var authorization =  "Basic " + btoa("alexis:notsecret");
+var bucket = "alexis";
+var collection = "notes";
+var url = `${server}/buckets/${bucket}/collections/${collection}/records`;
+
+// Reusable HTTP headers.
+var headers = {
+    "Accept":        "application/json",
+    "Content-Type":  "application/json",
+    "Authorization": authorization
+};
+
+function renderNote(note) {
+    var tpl = document.getElementById("note-tpl");
+    var div = tpl.content.cloneNode(true);
+    div.querySelector(".text").textContent = note.text;
+    div.querySelector(".link").textContent = note.url;
+    div.querySelector(".link").href = note.url;
+    div.querySelector(".date").textContent = new Date(note.date).toLocaleString("fr");
+    return div;
+}
+
+fetch(url, {headers: headers})
+    .then(function (response) {
+        if (response.ok) {
+            response.json().then((json) => {
+                var notes = document.getElementById("notes");
+                json.data.forEach((note) => {
+                    notes.appendChild(renderNote(note));
+                });
+            })
+        }
+})
+</script>
+</body>
+</html>

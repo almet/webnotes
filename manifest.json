@@ -1,26 +1,27 @@
 {
-  "applications":  {
-    "gecko": {
-      "id": "webextension@kinto-storage.com"
-    }
-  },
-  "manifest_version": 2,
-  "name": "Kinto Storage configurator",
-  "version": "0.1",
-  "content_scripts": [
-    {
-      "matches": ["*://*/*"],
-      "js": ["scripts/inject-script.js"]
-    }
-  ],
-  "web_accessible_resources": ["scripts/inject-kinto.js"],
-  "browser_action": {
-    "default_icon": {
-      "19": "icons/icon-19.png",
-      "38": "icons/icon-38.png"
+    "manifest_version": 2,
+    "name": "kinto-notes@notmyidea.org",
+    "description": "Send clipboard to kinto",
+    "version": "1.0",
+    "homepage_url": "https://www.notmyidea.org",
+
+    "icons": {
+        "48": "icons/clipboard-48.png"
     },
-    "default_title": "Configure your kinto instance",
-    "default_popup": "popup/chose_server.html"
+
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["content-script.js"]
+    }],
+    "background": {
+        "scripts": ["background.js"]
+      },
+
+    "commands": {
+      "toggle-feature": {
+        "suggested_key": {"default": "Ctrl+Shift+U" },
+        "description": "Send a 'toggle-feature' event to the extension"
+      }
   },
-  "permissions": ["storage"]
+  "permissions": ["notifications", "https://kinto.notmyidea.org/*"]
 }
