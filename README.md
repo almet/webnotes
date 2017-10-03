@@ -28,7 +28,7 @@ to match yours.
 
 Download [the xpi file](https://github.com/almet/webnotes/raw/master/builds/webnotes.notmyidea.org.xpi)
 
-Then, head to [about:addons](about:addons) and select "Install addon from file".
+Then, head to `about:addons` and select "Install addon from file".
 
 Once installed, click on "more" or "preferences" next to the addon name. There,
 enter your kinto instance, bucket and collection name and then hit save.
