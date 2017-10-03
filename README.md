@@ -2,7 +2,7 @@
 
 This is a small Firefox extension to publish selection of text with its context (date and URL for now) when `Ctrl+Shift+U` is pressed.
 
-If you want, [have a look at the demo](https://alexis.notmyidea.org/webnotes.ogv) (in french), or [my personal webnotes](https://notes.notmyidea.org).
+If you want, [have a look at the presentation video](https://alexis.notmyidea.org/webnotes.ogv) (in french), or [my personal webnotes](https://notes.notmyidea.org).
 
 *Disclaimer: I've done this for myself. I'm happy to share it so other can
 use it as well, but I'll probably not commit a lot of time maintaining this!*
