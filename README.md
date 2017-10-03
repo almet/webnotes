@@ -26,22 +26,12 @@ to match yours.
 
 ## How do I install it?
 
-First, clone this repository locally, for instance with:
+Download [the xpi file](https://github.com/almet/webnotes/raw/master/builds/webnotes.notmyidea.org.xpi)
 
-  $ git clone https://github.com/almet/webnotes.git
+Then, head to [about:addons](about:addons) and select "Install addon from file".
 
-Currently, the addon is not signed, so you need to set the
-`xpinstall.signatures.required` pref to `false` in the
-[about:config](about:config) page.
-
-Then, head to [about:debugging](about:debugging) and select the `manifest.json`
-file.
-
-## How to configure it?
-
-Once the extension installed, you need to configure it! Head to
-[about:addons](about:addons), enter your kinto instance, bucket and collection
-name and then hit save.
+Once installed, click on "more" or "preferences" next to the addon name. There,
+enter your kinto instance, bucket and collection name and then hit save.
 
 Once the values saved, you can initialize the storage by clicking the link.
 
