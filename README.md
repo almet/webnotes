@@ -52,6 +52,6 @@ http://localhost:8000.
 The short answer is that I actually haven't found one that suits my need *and*
 that is open-source.
 
-[Wallabag](http://doc.wallabag.org/) play a kind of similar role but
-doesn't currently allow me to save selections of text nor publish them to
+[Wallabag](http://doc.wallabag.org/) plays a kind of similar role but
+doesn't currently allow me to save selections of text nor to publish them to
 somewhere public.
