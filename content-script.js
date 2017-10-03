@@ -3,13 +3,11 @@ function copySelection() {
 
     if (selectedText) {
         browser.runtime.sendMessage({
-            type: "request",
-            body: {
-                data: {
-                    text: selectedText,
-                    url: window.location.href,
-                    date: new Date()
-                }
+            type: "saveNote",
+            note: {
+                text: selectedText,
+                url: window.location.href,
+                date: new Date()
             }
         });
     }
