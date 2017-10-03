@@ -10,7 +10,7 @@
         "js": ["content-script.js"]
     }],
     "background": {
-        "scripts": ["background.js"]
+        "scripts": ["purify.js", "background.js"]
       },
 
     "commands": {
@@ -19,7 +19,7 @@
         "description": "Publish the selected text as a webnote."
       }
   },
-  "permissions": ["storage", "notifications", "https://kinto.notmyidea.org/*"],
+  "permissions": ["storage", "notifications", "<all_urls>"],
   "options_ui": {
     "page": "options.html"
   }

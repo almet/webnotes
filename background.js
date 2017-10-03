@@ -8,7 +8,12 @@ gettingAllCommands.then((commands) => {
 
 browser.commands.onCommand.addListener((command) => {
     browser.tabs.query({active: true}).then((tabs) => {
-        browser.tabs.sendMessage(tabs[0].id, {'action': 'copy-selection'});
+        var tab = tabs[0];
+        browser.tabs.executeScript(tab.id, {
+            file: "libs/purify.js",
+        }).then(() => {
+            browser.tabs.sendMessage(tabs[0].id, {'action': 'copy-selection'});
+        });
     }, (error) => { console.log(`error: ${error}`)});
 });
 

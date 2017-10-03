@@ -36,7 +36,7 @@ var headers = {
 function renderNote(note) {
     var tpl = document.getElementById("note-tpl");
     var div = tpl.content.cloneNode(true);
-    div.querySelector(".text").textContent = note.text;
+    div.querySelector(".text").innerHTML = note.text;
     div.querySelector(".link").textContent = note.url;
     div.querySelector(".link").href = note.url;
     div.querySelector(".date").textContent = new Date(note.date).toLocaleString("fr");
