@@ -1,3 +1,4 @@
+var browser = browser || chrome;
 function copySelection() {
     var selectedText = window.getSelection().toString().trim() || "yeeeeeeepeeee";
 

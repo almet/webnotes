@@ -1,3 +1,4 @@
+var browser = browser || chrome;
 var gettingAllCommands = browser.commands.getAll();
 gettingAllCommands.then((commands) => {
   for (let command of commands) {
