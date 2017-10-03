@@ -1,8 +1,11 @@
 # Webnotes
 
-This is a small Firefox extension to publish selection of text with its context (date and URL for now) when `Ctrl+Shift+U` is pressed.
+This is a small Firefox extension to publish selection of text with its context
+(date and URL for now) when `Ctrl+Shift+U` is pressed.
 
-If you want, [have a look at the presentation video](https://alexis.notmyidea.org/webnotes.ogv) (in french), or [my personal webnotes](https://notes.notmyidea.org).
+If you want, [have a look at the presentation
+video](https://alexis.notmyidea.org/webnotes.mp4) (in french), or [my personal
+webnotes](https://notes.notmyidea.org).
 
 *Disclaimer: I've done this for myself. I'm happy to share it so other can
 use it as well, but I'll probably not commit a lot of time maintaining this!*
@@ -50,3 +53,12 @@ to match yours.
 
 The `make serve` command will serve the content of this folder on
 http://localhost:8000.
+
+## Why doing yet another tool for this?
+
+The short answer is that I actually haven't found one that suits my need *and*
+that is open-source.
+
+[Wallabag](http://doc.wallabag.org/) play a kind of similar role but
+doesn't currently allow me to save selections of text nor publish them to
+somewhere public.
