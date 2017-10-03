@@ -1,5 +1,5 @@
 upload:
-	rsync -P -rvz --delete reader/* artichaut:/home/www/notes.notmyidea.org
+	rsync -P -rvz --delete app/* artichaut:/home/www/notes.notmyidea.org
 
 serve:
-	cd reader && python -m SimpleHTTPServer &
+	cd app && python -m SimpleHTTPServer &
