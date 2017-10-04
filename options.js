@@ -29,9 +29,10 @@ function restoreOptions() {
 
       // Store the sanitizer options so the user can configure its behavior.
       var defaultOptions = {
-          ALLOWED_TAGS: ['em', 'a', 'strong', 'i', 'b', 'cite', 'abbr', 'acronym',
-                         'address', 'br', 'dd', 'dl', 'dt', 'ul', 'li', 'p', 'pre',
-                         'q', 's', 'small', 'sub', 'tt', 'u']
+        ALLOWED_TAGS: ['em', 'a', 'strong', 'i', 'b', 'cite', 'abbr', 'acronym',
+                         'address', 'br', 'dd', 'dl', 'dt', 'ol', 'ul', 'li', 'p', 'pre',
+                         'q', 's', 'small', 'sub', 'tt', 'u'],
+        FORBID_ATTR: ['style', 'onclick', 'onmouseover']
       }
       document.querySelector("#sanitizer_options").value = JSON.stringify(result.sanitizer_options) || JSON.stringify(defaultOptions);
   }, onError);
