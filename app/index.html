@@ -15,7 +15,7 @@
   <template id="note-tpl">
       <blockquote>
           <p class="text"></p>
-          <footer>Enregistré le <span class="date"></span> sur <a class="link" href=""></a></footer>
+          <footer>Enregistré dans <em><span class="tag"></span></em> le <span class="date"></span> sur <a class="link" href=""></a></footer>
       </blockquote>
   </template>
   <div id="notes"></div>
@@ -24,8 +24,8 @@
 <script type="text/javascript" charset="utf-8">
 
 var kinto_url = "https://kinto.notmyidea.org/v1";
-var kinto_bucket = "webnotes"
-var kinto_collection = "notes"
+var kinto_bucket = "webnotesapp"
+var kinto_collection = window.location.hash.slice(1) || "ametaireau"
 var records_url = `${kinto_url}/buckets/${kinto_bucket}/collections/${kinto_collection}/records`;
 
 var headers = {
@@ -39,6 +39,7 @@ function renderNote(note) {
     div.querySelector(".text").innerHTML = note.text;
     div.querySelector(".link").textContent = note.url;
     div.querySelector(".link").href = note.url;
+    div.querySelector(".tag").textContent = note.tag;
     div.querySelector(".date").textContent = new Date(note.date).toLocaleString("fr");
     return div;
 }
