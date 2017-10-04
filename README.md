@@ -5,7 +5,6 @@ This is a small Firefox extension to publish selection of text with its context
 context menu.
 
 <img src="/webnotes.gif?raw=true"/>
-![demonstration](https://alexis.notmyidea.org/webnotes.gif)
 
 If you want, [have a look at the presentation
 video](https://alexis.notmyidea.org/webnotes.mp4) (in french), or [my personal
