@@ -4,7 +4,7 @@ This is a small Firefox extension to publish selection of text with its context
 (date and URL for now) when `Ctrl+Shift+U` is pressed or with a link in the
 context menu.
 
-<img src="/webnotes.gif?raw=true" width="500px" />
+<img src="/webnotes.gif?raw=true"/>
 ![demonstration](https://alexis.notmyidea.org/webnotes.gif)
 
 If you want, [have a look at the presentation
