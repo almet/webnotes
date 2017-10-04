@@ -33,9 +33,6 @@ then head to `about:addons` and select "Install addon from file".
 Once installed, click on "more" or "preferences" next to the addon name. There,
 enter your kinto instance, bucket and collection name and then hit save.
 
-*Please note that the distributed signed xpi currently only allows to use
-kinto.notmyidea.org as a kinto instance*
-
 Once the values saved, you can initialize the storage by clicking the link.
 
 ## Where can I see my notes?
