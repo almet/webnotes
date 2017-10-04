@@ -10,13 +10,15 @@
     <form>
         <dl>
             <dt><label>Kinto server URL</label></dt>
-            <dd><input type="text" id="kinto_url"></dd>
+            <dd><input type="text" id="kinto_url" size=40></dd>
             <dt><label>Bucket name</label></dt>
-            <dd><input type="text" id="kinto_bucket" ></dd>
+            <dd><input type="text" id="kinto_bucket" size=40></dd>
             <dt><label>Collection name</label></dt>
-            <dd><input type="text" id="kinto_collection" ></dd>
+            <dd><input type="text" id="kinto_collection" size=40></dd>
             <dt><label>Secret key</label></dt>
-            <dd><input type="text" id="kinto_secret" ></dd>
+            <dd><input type="text" id="kinto_secret" size=40></dd>
+            <dt><label>Sanitizer options (<a href="https://github.com/cure53/DOMPurify#can-i-configure-it">see the configuration options</a>)</label></dt>
+            <dd><input type="text" id="sanitizer_options" size=100></dd>
         </dl>
         <button type="submit">Save</button>
         <a id="initializeStorage" href="">initialize storage</a>

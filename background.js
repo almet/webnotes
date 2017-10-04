@@ -1,10 +1,4 @@
 var browser = browser || chrome;
-var gettingAllCommands = browser.commands.getAll();
-gettingAllCommands.then((commands) => {
-  for (let command of commands) {
-    console.log(command);
-  }
-});
 
 browser.commands.onCommand.addListener((command) => {
     browser.tabs.query({active: true}).then((tabs) => {
@@ -12,13 +6,20 @@ browser.commands.onCommand.addListener((command) => {
         browser.tabs.executeScript(tab.id, {
             file: "libs/purify.js",
         }).then(() => {
-            browser.tabs.sendMessage(tabs[0].id, {'action': 'copy-selection'});
+            browser.storage.local.get("sanitizer_options").then((results) => {
+                browser.tabs.sendMessage(tabs[0].id, {
+                    'action': 'copy-selection',
+                    'options': JSON.stringify(results.sanitizer_options)
+                });
+            });
         });
     }, (error) => { console.log(`error: ${error}`)});
 });
 
 function saveNote(note) {
-    browser.storage.local.get(["kinto_url", "kinto_bucket", "kinto_collection", "kinto_secret"]).then((result) => {
+    var keys = ["kinto_url", "kinto_bucket", "kinto_collection", "kinto_secret"];
+
+    browser.storage.local.get(keys).then((result) => {
         var authorization =  "Basic " + btoa(`notes:${result.kinto_secret}`);
         var bucket_url = `${result.kinto_url}/buckets/${result.kinto_bucket}`;
         var collection_url = `${bucket_url}/collections/${result.kinto_collection}`

@@ -5,7 +5,8 @@ function saveOptions(e) {
     kinto_url: document.querySelector("#kinto_url").value,
     kinto_bucket: document.querySelector("#kinto_bucket").value,
     kinto_collection: document.querySelector("#kinto_collection").value,
-    kinto_secret: document.querySelector("#kinto_secret").value
+    kinto_secret: document.querySelector("#kinto_secret").value,
+    sanitizer_options: JSON.parse(document.querySelector("#sanitizer_options").value)
   });
 }
 
@@ -14,12 +15,25 @@ function onError(error) {
 }
 
 function restoreOptions() {
-  browser.storage.local.get(["kinto_url", "kinto_bucket", "kinto_collection", "kinto_secret"]).then((result) => {
+  var keys = ["kinto_url", "kinto_bucket", "kinto_collection", "kinto_secret",
+              "sanitizer_options"];
+  browser.storage.local.get(keys).then((result) => {
       document.querySelector("#kinto_url").value = result.kinto_url || "https://kinto.notmyidea.org/v1";
       document.querySelector("#kinto_bucket").value = result.kinto_bucket || "notes";
       document.querySelector("#kinto_collection").value = result.kinto_collection || "notes";
+
+      // By default, generate a random string for the kinto secret;
+      // It's not easy to remember,but safer than a fixed default.
       let randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 10);
       document.querySelector("#kinto_secret").value = result.kinto_secret || randomString;
+
+      // Store the sanitizer options so the user can configure its behavior.
+      var defaultOptions = {
+          ALLOWED_TAGS: ['em', 'a', 'strong', 'i', 'b', 'cite', 'abbr', 'acronym',
+                         'address', 'br', 'dd', 'dl', 'dt', 'ul', 'li', 'p', 'pre',
+                         'q', 's', 'small', 'sub', 'tt', 'u']
+      }
+      document.querySelector("#sanitizer_options").value = JSON.stringify(result.sanitizer_options) || JSON.stringify(defaultOptions);
   }, onError);
 }
 

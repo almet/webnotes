@@ -1,7 +1,7 @@
 var browser = browser || chrome;
 
-function copySelection() {
-    var selectedText = getSelectionHtml();
+function copySelection(sanitizerOptions) {
+    var selectedText = getSelectionHtml(sanitizerOptions);
 
     if (selectedText) {
         var tag = window.prompt("Saving the selected content. Which tag should be set?", "default");
@@ -17,7 +17,7 @@ function copySelection() {
     }
 }
 
-function getSelectionHtml() {
+function getSelectionHtml(sanitizerOptions) {
     var html = "";
     if (typeof window.getSelection != "undefined") {
         var sel = window.getSelection();
@@ -35,17 +35,12 @@ function getSelectionHtml() {
         }
     }
     var purify = getPurify();
-    var sanitized = purify.sanitize(html, {
-        ALLOWED_TAGS: ['em', 'a', 'strong', 'i', 'b', 'cite', 'abbr', 'acronym',
-                       'address', 'br', 'dd', 'dl', 'dt', 'ul', 'li', 'p', 'pre',
-                       'q', 's', 'small', 'sub', 'tt', 'u']
-    });
+    var sanitized = purify.sanitize(html, sanitizerOptions);
     return sanitized;
 }
 
 browser.runtime.onMessage.addListener(function(msg) {
-      console.log('received message', msg);
       if (msg.action == 'copy-selection') {
-          copySelection();
+          copySelection(JSON.parse(msg.options));
       }
 });
