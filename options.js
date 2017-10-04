@@ -19,13 +19,16 @@ function restoreOptions() {
               "sanitizer_options"];
   browser.storage.local.get(keys).then((result) => {
       document.querySelector("#kinto_url").value = result.kinto_url || "https://kinto.notmyidea.org/v1";
-      document.querySelector("#kinto_bucket").value = result.kinto_bucket || "notes";
-      document.querySelector("#kinto_collection").value = result.kinto_collection || "notes";
+      document.querySelector("#kinto_bucket").value = result.kinto_bucket || "webnotesapp";
+
+      // By default, the collection name is random.
+      let randomCollection = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 10);
+      document.querySelector("#kinto_collection").value = result.kinto_collection || randomCollection;
 
       // By default, generate a random string for the kinto secret;
       // It's not easy to remember,but safer than a fixed default.
-      let randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 10);
-      document.querySelector("#kinto_secret").value = result.kinto_secret || randomString;
+      let randomSecret = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 10);
+      document.querySelector("#kinto_secret").value = result.kinto_secret || randomSecret;
 
       // Store the sanitizer options so the user can configure its behavior.
       var defaultOptions = {
@@ -53,17 +56,13 @@ function initializeStorage(e) {
         };
         var isPublic = JSON.stringify({permissions: {read: ["system.Everyone"]}});
 
-        fetch(bucket_url, {method: "PUT", headers: headers})
-            .then((bucketResp) => {
-                if (bucketResp.ok) {
-                    fetch(collection_url, {method: "PUT", headers: headers, body: isPublic})
-                        .then((resp) => {
-                            if (resp.ok) {
-                                document.querySelector("#initializeStorage").textContent += " [OK]";
-                            }
-                        });
+        fetch(collection_url, {method: "PUT", headers: headers, body: isPublic})
+            .then((resp) => {
+                if (resp.ok) {
+                    document.querySelector("#initializeStorage").textContent += " [OK]";
                 }
             });
+
     });
 }
 

@@ -44,6 +44,14 @@ to match yours.
 The `make serve` command will serve the content of this folder on
 http://localhost:8000.
 
+## Using a different Kinto server
+
+If you want to use a different Kinto server, you might want to create a bucket to store all webnotes-related collections.
+
+Here is an [httpie](https://httpie.org) command to do so (replace `notsecret` with the admin password you want to use):
+
+> echo '{"data": {"id": "webnotesapp"}, "permissions": {"collection:create": ["system.Authenticated"]}}' | http post https://yourkintoinstance.tld/v1/buckets --auth="admin:notsecret" --verbose
+
 ## Why doing yet another tool for this?
 
 The short answer is that I actually haven't found one that suits my need *and*
