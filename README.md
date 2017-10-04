@@ -1,7 +1,10 @@
 # Webnotes
 
 This is a small Firefox extension to publish selection of text with its context
-(date and URL for now) when `Ctrl+Shift+U` is pressed.
+(date and URL for now) when `Ctrl+Shift+U` is pressed or with a link in the
+context menu.
+
+![demonstration](https://alexis.notmyidea.org/webnotes.gif)
 
 If you want, [have a look at the presentation
 video](https://alexis.notmyidea.org/webnotes.mp4) (in french), or [my personal
