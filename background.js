@@ -1,6 +1,6 @@
 var browser = browser || chrome;
 
-browser.commands.onCommand.addListener((command) => {
+function copySelection(command){
     browser.tabs.query({active: true}).then((tabs) => {
         var tab = tabs[0];
         browser.tabs.executeScript(tab.id, {
@@ -14,7 +14,7 @@ browser.commands.onCommand.addListener((command) => {
             });
         });
     }, (error) => { console.log(`error: ${error}`)});
-});
+}
 
 function saveNote(note) {
     var keys = ["kinto_url", "kinto_bucket", "kinto_collection", "kinto_secret"];
@@ -51,3 +51,18 @@ browser.runtime.onMessage.addListener(payload => {
         saveNote(payload.note);
     }
 });
+
+
+browser.contextMenus.create({
+  id: "save-note",
+  title: "Save as webnote",
+  contexts: ["selection"]
+});
+browser.contextMenus.onClicked.addListener(function(info, tab) {
+  switch (info.menuItemId) {
+    case "save-note":
+      copySelection();
+      break;
+  }
+})
+browser.commands.onCommand.addListener(copySelection);
