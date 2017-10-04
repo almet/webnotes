@@ -1,12 +1,25 @@
-var browser = browser || chrome;
+console.log("yepee");
 
+browser.commands.getAll().then((commands) => {
+    console.log("yepee 6");
+  for (let command of commands) {
+    console.log(command);
+  }
+});
+
+console.log("yepee 2");
 browser.commands.onCommand.addListener((command) => {
+    console.log("command received");
+
     browser.tabs.query({active: true}).then((tabs) => {
+        console.log("found active tab");
         var tab = tabs[0];
         browser.tabs.executeScript(tab.id, {
-            file: "libs/purify.js",
+            file: "/libs/purify.js",
         }).then(() => {
+            console.log("injected script");
             browser.storage.local.get("sanitizer_options").then((results) => {
+                console.log("got options script");
                 browser.tabs.sendMessage(tabs[0].id, {
                     'action': 'copy-selection',
                     'options': JSON.stringify(results.sanitizer_options)
@@ -15,7 +28,7 @@ browser.commands.onCommand.addListener((command) => {
         });
     }, (error) => { console.log(`error: ${error}`)});
 });
-
+console.log("yepee 3");
 function saveNote(note) {
     var keys = ["kinto_url", "kinto_bucket", "kinto_collection", "kinto_secret"];
 
@@ -45,9 +58,12 @@ function saveNote(note) {
     });
 }
 
-
+console.log("yepee 4");
 browser.runtime.onMessage.addListener(payload => {
+    console.log("message received in background.");
+
     if (payload.type == "saveNote") {
         saveNote(payload.note);
     }
 });
+console.log("yepee 5");

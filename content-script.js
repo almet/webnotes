@@ -1,5 +1,3 @@
-var browser = browser || chrome;
-
 function copySelection(sanitizerOptions) {
     var selectedText = getSelectionHtml(sanitizerOptions);
 

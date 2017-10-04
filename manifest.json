@@ -7,10 +7,16 @@
 
     "content_scripts": [{
         "matches": ["<all_urls>"],
-        "js": ["content-script.js"]
+        "js": [
+            "libs/browser-polyfill.min.js",
+            "content-script.js"
+        ]
     }],
     "background": {
-        "scripts": ["purify.js", "background.js"]
+        "scripts": [
+            "libs/browser-polyfill.min.js",
+            "background.js"
+        ]
       },
 
     "commands": {
