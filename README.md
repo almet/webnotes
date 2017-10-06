@@ -29,9 +29,9 @@ to match yours.
 
 ## How do I install it?
 
-First, download [the xpi
-file](https://github.com/almet/webnotes/raw/master/builds/webnotes.notmyidea.org.xpi),
-then head to `about:addons` and select "Install addon from file".
+First, go to [the addons.mozilla.org
+page](https://addons.mozilla.org/en-US/firefox/addon/wwebnotes/) and click
+"install", then head to `about:addons` and select "Install addon from file".
 
 Once installed, click on "more" or "preferences" next to the addon name. There,
 enter your kinto instance, bucket and collection name and then hit save.
