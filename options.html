@@ -3,28 +3,73 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="libs/bootstrap.min.css">
+    <style media="screen">
+    #stores {
+        width: 600px;
+    }
+    </style>
   </head>
 
   <body>
-
+      <div id="storeSettingsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Store settings" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="title">Store Settings</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+                <div class="form-group">
+                  <label for="kinto_collection" class="form-control-label">Collection Name</label>
+                  <input type="text" class="form-control" id="kinto_collection" placeholder="ernest">
+                </div>
+                <div class="form-group">
+                  <label for="kinto_secret" class="form-control-label">Secret key</label>
+                  <input type="text" class="form-control" id="kinto_secret" placeholder="this is not secret">
+                </div>
+                <div class="form-group">
+                  <label for="kinto_url" class="form-control-label">Kinto server URL</label>
+                  <input type="text" class="form-control" id="kinto_url" placeholder="https://kinto.notmyidea.org/v1">
+                </div>
+                <div class="form-group">
+                  <label for="kinto_bucket" class="form-control-label">Bucket name</label>
+                  <input type="text" class="form-control" id="kinto_bucket" placeholder="webnotesapp">
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="save btn btn-primary">Send message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+        <template id="store-item-tpl">
+            <div class="col-12"><div class="id"></div> <div class="float-right"><button class="btn" data-toggle="modal" data-target="#storeSettingsModal" data-action="edit">Edit</button><button class="btn">Delete</button></div></div>
+        </template>
+        <h2>Stores</h2>
+        <div id="stores" class="row"></div>
+        <button id="new-store" class="btn btn-primary" data-toggle="modal" data-target="#storeSettingsModal" data-action="create">Add New Store</button>
+    <hr />
+    <h2>Other options</h2>
     <form>
-        <dl>
-            <dt><label>Collection name</label></dt>
-            <dd><input type="text" id="kinto_collection" size=40></dd>
-            <dt><label>Secret key</label></dt>
-            <dd><input type="text" id="kinto_secret" size=40></dd>
-            <strong>Do not change the following unless you know what you are doing!</strong>
-            <dt><label>Kinto server URL</label></dt>
-            <dd><input type="text" id="kinto_url" size=40></dd>
-            <dt><label>Bucket name</label></dt>
-            <dd><input type="text" id="kinto_bucket" size=40></dd>
-            <dt><label>Sanitizer options (<a href="https://github.com/cure53/DOMPurify#can-i-configure-it">see the configuration options</a>)</label></dt>
-            <dd><input type="text" id="sanitizer_options" size=100></dd>
-        </dl>
+        <div class="form-group row">
+            <label for="sanitizer_options">Sanitizer options</label>
+            <textarea class="form-control" id="sanitizer_options" rows="3"></textarea>
+            <small id="emailHelp" class="form-text text-muted"><a href="https://github.com/cure53/DOMPurify#can-i-configure-it">see the configuration options</a></small>
+        </div>
         <button type="submit">Save</button>
         <a id="initializeStorage" href="">initialize storage</a>
     </form>
-
+    </div>
+    <script src="libs/popper.min.js"></script>
+    <script src="libs/jquery.min.js"></script>
+    <script src="libs/bootstrap.min.js"></script>
     <script src="options.js"></script>
 
   </body>
