@@ -11,13 +11,19 @@
 </head>
 <body>
 <div class="container">
-  <h1><a href="#">My saved notes - from other places on the web.</a></h1>
+  <h1><a href="#all" onclick="displayNotes()">My saved notes - from other places on the web.</a></h1>
+  <p id="tags"></p>
   <template id="note-tpl">
       <blockquote>
           <p class="text"></p>
-          <footer>Enregistré dans <em><span class="tag"></span></em> le <span class="date"></span> sur <a class="link" href=""></a></footer>
+          <footer>Enregistré dans <em><span class="tags"></span></em> le <span class="date"></span> sur <a class="link" href=""></a></footer>
       </blockquote>
   </template>
+  <template id="tag-tpl">
+   <span>
+       <a class="link" href="#"><span class="name"></span></a>&nbsp;
+   </span>
+ </template>
   <div id="notes"></div>
 </div>
 
@@ -25,7 +31,7 @@
 
 var kinto_url = "https://kinto.notmyidea.org/v1";
 var kinto_bucket = "webnotesapp"
-var kinto_collection = window.location.hash.slice(1) || "ametaireau"
+var kinto_collection = "ametaireau"
 var records_url = `${kinto_url}/buckets/${kinto_bucket}/collections/${kinto_collection}/records`;
 
 var headers = {
@@ -39,19 +45,96 @@ function renderNote(note) {
     div.querySelector(".text").innerHTML = note.text;
     div.querySelector(".link").textContent = note.url;
     div.querySelector(".link").href = note.url;
-    div.querySelector(".tag").textContent = note.tag;
     div.querySelector(".date").textContent = new Date(note.date).toLocaleString("fr");
+    var tagsContainer = div.querySelector(".tags");
+    note.tags.forEach(function(tag) {
+        tagsContainer.appendChild(renderTag(tag));
+    });
     return div;
+}
+
+// Renders a single tag.
+function renderTag(tag) {
+    var tpl = document.getElementById("tag-tpl");
+    var li = tpl.content.cloneNode(true);
+    li.querySelector(".name").textContent = tag;
+    li.querySelector(".link").href = "#" + tag;
+    li.querySelector(".link").onclick = function(e) {
+        var filteredNotes = filterNotes(tag);
+        displayNotes(filteredNotes);
+    };
+    return li;
+}
+
+function clearNode(node){
+    while (node.firstChild) {
+        node.removeChild(node.firstChild);
+    }
+}
+
+function renderTags(tags) {
+    var displayedTags = "";
+    var tagsContainer = document.getElementById("tags");
+    tags.forEach(function(tag) {
+        tagsContainer.appendChild(renderTag(tag));
+    });
+}
+
+// Iterate over all tags and put them in a set.
+function getTags(data) {
+    return data.reduce(function(tags, note) {
+        note.tags.forEach(function(tag) {
+            tags.add(tag);
+        });
+        return tags;
+    }, new Set());
+}
+
+function displayNotes(notes) {
+    if (notes == undefined) {
+        notes = document.notes;
+    }
+    var container = document.getElementById("notes");
+    clearNode(container);
+    notes.forEach((note) => {
+        container.appendChild(renderNote(note));
+    });
+}
+
+// Takes data as input and output a well-known format.
+// This is made to remove the incompatibilities between data.
+// For instance the .tag vs .tags in the first version.
+function hydrate(data) {
+    return data.map(function(note) {
+        if (note.tags == undefined) {
+            note.tags = [note.tag];
+            delete note.tag;
+        }
+        return note;
+    });
+}
+
+function filterNotes(tag) {
+    return document.notes.filter(function(note) {
+        return note.tags.includes(tag);
+    });
 }
 
 fetch(records_url, {headers: headers})
     .then(function (response) {
+        console.log(response);
         if (response.ok) {
             response.json().then((json) => {
-                var notes = document.getElementById("notes");
-                json.data.forEach((note) => {
-                    notes.appendChild(renderNote(note));
-                });
+                var notes = hydrate(json.data);
+                renderTags(getTags(notes));
+                document.notes = notes;
+
+                var filteredNotes = notes;
+                var tag = window.location.hash.slice(1)
+                if (tag !== '') {
+                    filteredNotes = filterNotes(tag);
+                }
+                displayNotes(filteredNotes);
             })
         }
 })

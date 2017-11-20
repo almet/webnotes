@@ -4,14 +4,16 @@ function copySelection(sanitizerOptions) {
     var selectedText = getSelectionHtml(sanitizerOptions);
 
     if (selectedText) {
-        var tag = window.prompt("Saving the selected content. Which tag should be set?", "default");
+        var input = window.prompt("Saving the selected content. Which tag should be set?", "default");
+        var tags = input.split(',').map(function(s) { return s.trim() });
+
         browser.runtime.sendMessage({
              type: "saveNote",
              note: {
                  text: selectedText,
                  url: window.location.href,
                  date: new Date(),
-                 tag: tag
+                 tags: tags,
              }
          });
     }
