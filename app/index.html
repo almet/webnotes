@@ -75,6 +75,8 @@ function clearNode(node){
 function renderTags(tags) {
     var displayedTags = "";
     var tagsContainer = document.getElementById("tags");
+
+    tags = Array.from(tags).sort();
     tags.forEach(function(tag) {
         tagsContainer.appendChild(renderTag(tag));
     });
@@ -122,7 +124,6 @@ function filterNotes(tag) {
 
 fetch(records_url, {headers: headers})
     .then(function (response) {
-        console.log(response);
         if (response.ok) {
             response.json().then((json) => {
                 var notes = hydrate(json.data);
