@@ -4,19 +4,19 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Saved notes</title>
-    <link rel="stylesheet" href="bootstrap.min.css">
-    <link rel="stylesheet" href="bootstrap-theme.min.css">
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="custom.css">
     <script src="jquery-2.1.0.min.js"></script>
-    <script src="bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
-  <h1><a href="#all" onclick="displayNotes()">My saved notes - from other places on the web.</a></h1>
+  <h1 id="title"><a href="#all" onclick="displayNotes()">🌟 My saved notes</a></h1>
+  <h2 id="subtitle">...from other places on the web!</h2>
   <p id="tags"></p>
   <template id="note-tpl">
-      <blockquote>
-          <p class="text"></p>
-          <footer>Enregistré dans <em><span class="tags"></span></em> le <span class="date"></span> sur <a class="link" href=""></a></footer>
+      <blockquote class="blockquote">
+          <p class="mb-0 text"></p>
+          <footer class="blockquote-footer"><em><span class="tags"></span></em> le <span class="date"></span> <cite><a class="link" href="">Go to the source</a></cite></footer>
       </blockquote>
   </template>
   <template id="tag-tpl">
@@ -43,7 +43,7 @@ function renderNote(note) {
     var tpl = document.getElementById("note-tpl");
     var div = tpl.content.cloneNode(true);
     div.querySelector(".text").innerHTML = note.text;
-    div.querySelector(".link").textContent = note.url;
+    /* div.querySelector(".link").textContent = note.url;*/
     div.querySelector(".link").href = note.url;
     div.querySelector(".date").textContent = new Date(note.date).toLocaleString("fr");
     var tagsContainer = div.querySelector(".tags");
