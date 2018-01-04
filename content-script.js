@@ -14,6 +14,7 @@ function copySelection(sanitizerOptions) {
                  url: window.location.href,
                  date: new Date(),
                  tags: tags,
+                 title: document.title
              }
          });
     }
