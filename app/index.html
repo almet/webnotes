@@ -16,7 +16,7 @@
   <template id="note-tpl">
       <blockquote class="blockquote">
           <p class="mb-0 text"></p>
-          <footer class="blockquote-footer"><em><span class="tags"></span></em> le <span class="date"></span> <cite><a class="link" href="">Go to the source</a></cite></footer>
+          <footer class="blockquote-footer">dans <em><span class="tags"></span></em> le <span class="date"></span>. <cite><a class="link" href="">Go to the source</a></cite></footer>
       </blockquote>
   </template>
   <template id="tag-tpl">
@@ -39,11 +39,17 @@ var headers = {
     "Content-Type":  "application/json",
 };
 
+function getHostname(url) {
+    var parser = document.createElement('a');
+    parser.href = url;
+    return parser.hostname;
+}
+
 function renderNote(note) {
     var tpl = document.getElementById("note-tpl");
     var div = tpl.content.cloneNode(true);
     div.querySelector(".text").innerHTML = note.text;
-    /* div.querySelector(".link").textContent = note.url;*/
+    div.querySelector(".link").textContent = getHostname(note.url);
     div.querySelector(".link").href = note.url;
     div.querySelector(".date").textContent = new Date(note.date).toLocaleString("fr");
     var tagsContainer = div.querySelector(".tags");
