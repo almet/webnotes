@@ -6,6 +6,7 @@ function saveOptions(e) {
     kinto_bucket: document.querySelector("#kinto_bucket").value,
     kinto_collection: document.querySelector("#kinto_collection").value,
     kinto_secret: document.querySelector("#kinto_secret").value,
+    kinto_user: document.querySelector("#kinto_user").value,
     sanitizer_options: JSON.parse(document.querySelector("#sanitizer_options").value)
   });
 }
@@ -16,7 +17,7 @@ function onError(error) {
 
 function restoreOptions() {
   var keys = ["kinto_url", "kinto_bucket", "kinto_collection", "kinto_secret",
-              "sanitizer_options"];
+              "sanitizer_options", "kinto_user"];
   browser.storage.local.get(keys).then((result) => {
       document.querySelector("#kinto_url").value = result.kinto_url || "https://kinto.notmyidea.org/v1";
       document.querySelector("#kinto_bucket").value = result.kinto_bucket || "webnotesapp";
@@ -29,6 +30,8 @@ function restoreOptions() {
       // It's not easy to remember,but safer than a fixed default.
       let randomSecret = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 10);
       document.querySelector("#kinto_secret").value = result.kinto_secret || randomSecret;
+
+      document.querySelector("#kinto_user").value = result.kinto_user || "username";
 
       // Store the sanitizer options so the user can configure its behavior.
       var defaultOptions = {
@@ -43,8 +46,8 @@ function restoreOptions() {
 
 function initializeStorage(e) {
     e.preventDefault();
-    browser.storage.local.get(["kinto_url", "kinto_bucket", "kinto_collection", "kinto_secret"]).then((result) => {
-        var authorization =  "Basic " + btoa(`notes:${result.kinto_secret}`);
+    browser.storage.local.get(["kinto_url", "kinto_bucket", "kinto_collection", "kinto_secret", "kinto_user"]).then((result) => {
+        var authorization =  "Basic " + btoa(`${result.kinto_user}:${result.kinto_secret}`);
         var bucket_url = `${result.kinto_url}/buckets/${result.kinto_bucket}`;
         var collection_url = `${bucket_url}/collections/${result.kinto_collection}`
         var records_url = `${collection_url}/records`;

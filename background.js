@@ -17,10 +17,10 @@ function copySelection(command){
 }
 
 function saveNote(note) {
-    var keys = ["kinto_url", "kinto_bucket", "kinto_collection", "kinto_secret"];
+    var keys = ["kinto_url", "kinto_bucket", "kinto_collection", "kinto_secret", "kinto_user"];
 
     browser.storage.local.get(keys).then((result) => {
-        var authorization =  "Basic " + btoa(`notes:${result.kinto_secret}`);
+        var authorization =  "Basic " + btoa(`${result.kinto_user}:${result.kinto_secret}`);
         var bucket_url = `${result.kinto_url}/buckets/${result.kinto_bucket}`;
         var collection_url = `${bucket_url}/collections/${result.kinto_collection}`
         var records_url = `${collection_url}/records`;
