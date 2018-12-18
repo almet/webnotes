@@ -1,0 +1,39 @@
+body {
+    background-image: url('backgrounds/naturalblack.png');
+}
+
+.container {
+    background-color: #fff;
+    padding: 10px 65px;
+}
+
+#title {
+    float: left;
+    margin: 30px;
+}
+
+#subtitle {
+    padding-left: 20px;
+    line-height: 3;
+}
+
+#tags {
+    clear: both;
+    padding-bottom: 15px;
+    padding-top: 10px;
+}
+
+.blockquote {
+    border-width: 0 0 0 5px;
+    border-color: #f3f3f3;
+    border-style: solid;
+    padding-left: 15px;
+    -webkit-transition: width 2s, height 2s, background-color 2s, -webkit-transform 2s;
+    transition: width 2s, height 2s, background-color 2s, transform 2s;
+    transition-duration: 0.5s;
+}
+
+.blockquote:hover {
+
+    border-color: black;
+}

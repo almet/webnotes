@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Saved notes</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="custom.css">
+    <script src="jquery-2.1.0.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <h1 id="title"><a href="#all" onclick="displayNotes()">🌟 My saved notes</a></h1>
+  <h2 id="subtitle">...from other places on the web!</h2>
+  <p>Ces notes sont prises grâce à une extension de Firefox, <a href="https://github.com/almet/webnotes">disponible ici</a>.</p>
+
+  <p id="tags"></p>
+  <template id="note-tpl">
+      <blockquote class="blockquote">
+          <p class="mb-0 text"></p>
+          <footer class="blockquote-footer">dans <em><span class="tags"></span></em> le <span class="date"></span>. <cite><a class="link" href="">Go to the source</a></cite></footer>
+      </blockquote>
+  </template>
+  <template id="tag-tpl">
+   <span>
+       <a class="link" href="#"><span class="name"></span></a>&nbsp;
+   </span>
+ </template>
+  <div id="notes"></div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+
+var kinto_url = "https://kinto.notmyidea.org/v1";
+var kinto_bucket = "webnotesapp"
+var kinto_collection = "ametaireau"
+var records_url = `${kinto_url}/buckets/${kinto_bucket}/collections/${kinto_collection}/records`;
+
+var headers = {
+    "Accept":        "application/json",
+    "Content-Type":  "application/json",
+};
+
+function getHostname(url) {
+    var parser = document.createElement('a');
+    parser.href = url;
+    return parser.hostname;
+}
+
+function renderNote(note) {
+    var tpl = document.getElementById("note-tpl");
+    var div = tpl.content.cloneNode(true);
+    div.querySelector(".text").innerHTML = note.text;
+    div.querySelector(".link").textContent = getHostname(note.url);
+    div.querySelector(".link").href = note.url;
+    div.querySelector(".date").textContent = new Date(note.date).toLocaleString("fr");
+    var tagsContainer = div.querySelector(".tags");
+    note.tags.forEach(function(tag) {
+        tagsContainer.appendChild(renderTag(tag));
+    });
+    return div;
+}
+
+// Renders a single tag.
+function renderTag(tag) {
+    var tpl = document.getElementById("tag-tpl");
+    var li = tpl.content.cloneNode(true);
+    li.querySelector(".name").textContent = tag;
+    li.querySelector(".link").href = "#" + tag;
+    li.querySelector(".link").onclick = function(e) {
+        var filteredNotes = filterNotes(tag);
+        displayNotes(filteredNotes);
+    };
+    return li;
+}
+
+function clearNode(node){
+    while (node.firstChild) {
+        node.removeChild(node.firstChild);
+    }
+}
+
+function renderTags(tags) {
+    var displayedTags = "";
+    var tagsContainer = document.getElementById("tags");
+
+    tags = Array.from(tags).sort();
+    tags.forEach(function(tag) {
+        tagsContainer.appendChild(renderTag(tag));
+    });
+}
+
+// Iterate over all tags and put them in a set.
+function getTags(data) {
+    return data.reduce(function(tags, note) {
+        note.tags.forEach(function(tag) {
+            tags.add(tag);
+        });
+        return tags;
+    }, new Set());
+}
+
+function sortByDate(array) {
+    return array.sort(function(a, b) {
+        a = new Date(a.date);
+        b = new Date(b.date);
+        return a > b ? -1 : a < b ? 1 : 0;
+    });
+}
+
+function displayNotes(notes) {
+    if (notes == undefined) {
+        notes = document.notes;
+    }
+    var container = document.getElementById("notes");
+    clearNode(container);
+    notes = sortByDate(notes);
+    notes.forEach((note) => {
+        container.appendChild(renderNote(note));
+    });
+}
+
+// Takes data as input and output a well-known format.
+// This is made to remove the incompatibilities between data.
+// For instance the .tag vs .tags in the first version of the extension.
+function hydrate(data) {
+    return data.map(function(note) {
+        if (note.tags == undefined) {
+            note.tags = [note.tag];
+            delete note.tag;
+        }
+        return note;
+    });
+}
+
+function filterNotes(tag) {
+    return document.notes.filter(function(note) {
+        return note.tags.includes(tag);
+    });
+}
+
+fetch(records_url, {headers: headers})
+    .then(function (response) {
+        if (response.ok) {
+            response.json().then((json) => {
+                var notes = hydrate(json.data);
+                renderTags(getTags(notes));
+                document.notes = notes;
+
+                var filteredNotes = notes;
+                var tag = window.location.hash.slice(1)
+                if (tag !== '') {
+                    filteredNotes = filterNotes(tag);
+                }
+                displayNotes(filteredNotes);
+            })
+        }
+})
+</script>
+</body>
+</html>
